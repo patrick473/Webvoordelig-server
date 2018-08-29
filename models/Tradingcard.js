@@ -3,7 +3,7 @@ const {Schema} = mongoose;
 
 const cardSchema = new Schema({
 
-    game:String,
+    category:String,
     name:String,
     set:String,
     quality:String,
