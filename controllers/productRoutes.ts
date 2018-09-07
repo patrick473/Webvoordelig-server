@@ -1,14 +1,17 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
+import {Router, Request, Response} from 'express';
+import IQueryOptions from  '../interfaces/IQueryOptions'
 const Product = mongoose.model("products");
 
-module.exports = app => {
-  app.get("/api/products", (req, res) => {
+const router:Router = Router();
+  router.get("/api/products", (req:Request, res:Response) => {
     const { limit, skip, category } = req.query;
 
-    var query = {};
+    
+    var query:IQueryOptions = {};
 
     if (category) {
-      query.category = game;
+      query.category = category;
     }
 
     console.log(query);
@@ -34,12 +37,14 @@ module.exports = app => {
       console.log(error);
     }
   });
-  app.get("/api/products/amount", (req, res) => {
-    const category = req.query.category;
-    var query = {};
+
+
+  router.get("/api/products/amount", (req:Request, res:Response) => {
+    const {category} = req.query;
+    var query:IQueryOptions = {};
 
     if (category) {
-      query.category = game;
+      query.category = category;
     }
     Product.countDocuments({...query}, (err,c)=>{
         if(err){
@@ -47,7 +52,7 @@ module.exports = app => {
         }
         else{
             console.log(c);
-            result = {
+            const result = {
                 count: c
             }
             res.send(result);
@@ -59,9 +64,9 @@ module.exports = app => {
 
 
 
-  app.get("/api/products/:id", (req, res) => {
+  router.get("/api/products/:id", (req:Request, res:Response) => {
     try {
-      console.log(req.query);
+    
       Product.findById(req.params.id, null, (err, docs) => {
         if (err) {
           console.log(err);
@@ -74,4 +79,5 @@ module.exports = app => {
       console.log(error);
     }
   });
-};
+
+  export const ProductController: Router = router;
