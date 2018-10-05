@@ -1,3 +1,10 @@
-import CKeys from '../classes/Ckeys';
+import {CKeys} from './keys';
 
-export default new CKeys(process.env.mongoURI || '');
+    const dbPort = (process.env.dbPort) ? process.env.dbPort : '5432';
+export default  new CKeys(
+    process.env.dbName,
+    process.env.dbUser,
+    process.env.dbPass,
+    parseInt(dbPort)
+
+);
